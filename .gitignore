@@ -1,0 +1,9 @@
+.idea
+*iml
+*.terraform
+*/*.terraform
+*.tfstate.backup
+*/*.tfstate.backup
+*.tfstate
+*/*.tfstate
+.git
