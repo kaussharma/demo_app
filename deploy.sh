@@ -80,9 +80,6 @@ else
     popd
 fi
 
-
-
-
 terraform init -input=false -backend=true -backend-config=$BACKEND_VARS_PATH
 [ $? -ne 0 ] && { echo "Execution failed! Exiting..."; exit 1; }
 

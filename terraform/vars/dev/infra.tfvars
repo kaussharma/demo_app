@@ -8,7 +8,7 @@ KEY_ALGORITHM = "RSA"
 
 ssm_path = "/demo/"
 
-DESTINATION_SSH_KEY_PRIVATE = ".ssh/ssh_private_key"
-DESTINATION_SSH_KEY_PUBLIC  = ".ssh/ssh_private_key.pub"
+DESTINATION_SSH_KEY_PRIVATE = "../ansible/.ssh/ssh_private_key"
+DESTINATION_SSH_KEY_PUBLIC  = "../ansible/.ssh/ssh_private_key.pub"
 
 sshkey_overwrite = "true"

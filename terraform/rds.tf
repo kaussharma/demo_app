@@ -18,9 +18,6 @@ module "db" {
   password                            = "${random_password.db_password.result}"
   port                                = "5432"
   iam_database_authentication_enabled = true
-  maintenance_window                  = "Mon:00:00-Mon:03:00"
-  backup_window                       = "03:00-06:00"
-  backup_retention_period             = 0
   #multi_az = "true"
   tags = {
     Owner       = "user"
@@ -31,8 +28,8 @@ module "db" {
   major_engine_version = "9.6"
   deletion_protection  = false
   publicly_accessible  = "true"
-
-
+  backup_window        = ""
+  maintenance_window   = ""
 }
 
 resource "aws_ssm_parameter" "private_key" {

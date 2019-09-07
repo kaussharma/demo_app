@@ -2,12 +2,12 @@
 resource "local_file" "host_inventory" {
   count    = var.instance_count
   content  = templatefile("templates/host_inventory/host_inventory.tpl", { hostname = "demo_instance.${count.index}", ip_address = "${element(aws_instance.demo_instance.*.private_ip, count.index)}", availability_zone = "${element(aws_instance.demo_instance.*.availability_zone, count.index)}" })
-  filename = "ansible/host_inventory_services"
+  filename = "../ansible/host_inventory_services"
 }
 
 resource "local_file" "extra_vars" {
   content  = templatefile("templates/ansible/extra-vars.json.tmpl", { ansible_stage = var.stage })
-  filename = "ansible/extra-vars.json"
+  filename = "../ansible/extra-vars.json"
 }
 
 
