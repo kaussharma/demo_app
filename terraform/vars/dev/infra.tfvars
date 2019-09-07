@@ -1,12 +1,14 @@
 stage = "dev"
 
-instance_type= "t2.micro"
+instance_type  = "t2.micro"
+instance_count = 1
 
-key_pair = "demo.sshkey"
-
-
-KEY_BITS = 4096
+KEY_BITS      = 4096
 KEY_ALGORITHM = "RSA"
-sshkey_overwrite = "false"
 
 ssm_path = "/demo/"
+
+DESTINATION_SSH_KEY_PRIVATE = ".ssh/ssh_private_key"
+DESTINATION_SSH_KEY_PUBLIC  = ".ssh/ssh_private_key.pub"
+
+sshkey_overwrite = "true"

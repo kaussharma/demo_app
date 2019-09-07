@@ -4,7 +4,7 @@ resource "tls_private_key" "instance_sshkeys" {
 }
 
 resource "aws_ssm_parameter" "instance_private_key" {
-  name        = "/${var.stage}/privatekey"
+  name        = "/key/${var.stage}/privatekey"
   description = "demo instance Private Key"
   type        = "SecureString"
   value       = "${tls_private_key.instance_sshkeys.private_key_pem}"
@@ -13,7 +13,7 @@ resource "aws_ssm_parameter" "instance_private_key" {
 }
 
 resource "aws_ssm_parameter" "instance_public_key" {
-  name        = "/${var.ssm_path}/publickey"
+  name        = "/key/${var.stage}/publickey"
   description = "secretstore Public Key"
   type        = "String"
   value       = "${tls_private_key.instance_sshkeys.public_key_openssh}"
@@ -21,23 +21,27 @@ resource "aws_ssm_parameter" "instance_public_key" {
   depends_on  = ["tls_private_key.instance_sshkeys"]
 }
 
+resource "aws_key_pair" "auth" {
+  key_name   = "demo-keypair-${var.stage}"
+  public_key = tls_private_key.instance_sshkeys.public_key_openssh
+}
 
-/*
-resource "aws_instance" "ece_instance" {
-  count = "1"
-  ami = "${var.ece_vw_ami_id}"
-  instance_type = "t2.micro"
-  subnet_id = "${module.vpc.public_subnets}"
-  availability_zone = "${module.vpc.azs}"
- # iam_instance_profile = "${var.s3_snapshot_instance_profile}"
+
+resource "aws_instance" "demo_instance" {
+  count             = var.instance_count
+  ami               = "${data.aws_ami.amazon_linux_image.id}"
+  instance_type     = var.instance_type
+  subnet_id         = "${element(module.vpc.public_subnets, count.index)}"
+  availability_zone = "${element(data.aws_availability_zones.available.names, count.index)}"
+  # iam_instance_profile = "${var.s3_snapshot_instance_profile}"
 
   vpc_security_group_ids = [
-    "${module.vpc.default_vpc_default_security_group_id}"
+    "${module.vpc.default_security_group_id}"
   ]
   timeouts {
     create = "40m"
     update = "40m"
     delete = "50m"
   }
-  key_name = "${aws_key_pair.auth.key_name}"
-}*/
+  key_name = "demo-keypair-${var.stage}"
+}
