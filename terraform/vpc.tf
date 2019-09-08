@@ -11,7 +11,6 @@ module "vpc" {
   one_nat_gateway_per_az = false
   enable_dns_hostnames   = true
   enable_dns_support     = true
-
   tags = {
     Terraform   = "true"
     Environment = "${var.stage}"

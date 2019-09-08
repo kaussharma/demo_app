@@ -18,6 +18,9 @@ module "db" {
   password                            = "${random_password.db_password.result}"
   port                                = "5432"
   iam_database_authentication_enabled = true
+  vpc_security_group_ids = [
+    "${aws_security_group.secgroup_db.id}"
+  ]
   #multi_az = "true"
   tags = {
     Owner       = "user"

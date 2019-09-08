@@ -34,9 +34,10 @@ resource "aws_instance" "demo_instance" {
   subnet_id         = "${element(module.vpc.public_subnets, count.index)}"
   availability_zone = "${element(data.aws_availability_zones.available.names, count.index)}"
   # iam_instance_profile = "${var.s3_snapshot_instance_profile}"
+  #security_groups = [aws_security_group.secgroup_instance.id]
 
   vpc_security_group_ids = [
-    "${module.vpc.default_security_group_id}"
+    "${aws_security_group.secgroup_instance.id}"
   ]
   timeouts {
     create = "40m"

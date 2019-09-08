@@ -1,7 +1,7 @@
 
 resource "local_file" "host_inventory" {
   count    = var.instance_count
-  content  = templatefile("templates/host_inventory/host_inventory.tpl", { hostname = "demo_instance.${count.index}", ip_address = "${element(aws_instance.demo_instance.*.private_ip, count.index)}", availability_zone = "${element(aws_instance.demo_instance.*.availability_zone, count.index)}" })
+  content  = templatefile("templates/host_inventory/host_inventory.tpl", { hostname = "demo_instance.${count.index}", ip_address = "${element(aws_instance.demo_instance.*.public_ip, count.index)}", availability_zone = "${element(aws_instance.demo_instance.*.availability_zone, count.index)}" })
   filename = "../ansible/host_inventory_services"
 }
 
