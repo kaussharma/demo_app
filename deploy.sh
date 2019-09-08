@@ -41,8 +41,14 @@ pushd () {
     command pushd "$@" > /dev/null
 }
 
+# shellcheck disable=SC2120
 popd () {
     command popd "$@" > /dev/null
+}
+
+getAbsFilename() {
+  # $1 : relative filename
+  echo "$(cd "$(dirname "$1")" && pwd)/$(basename "$1")"
 }
 
 if [[ -z "$AWS_ACCESS_KEY_ID" && ! -f "$HOME/.aws/credentials" ]]
@@ -84,4 +90,13 @@ terraform init -input=false -backend=true -backend-config=$BACKEND_VARS_PATH
 [ $? -ne 0 ] && { echo "Execution failed! Exiting..."; exit 1; }
 
 terraform apply -auto-approve -input=false -refresh=true -var-file=$INFRA_VARS_PATH
+[ $? -ne 0 ] && { echo "Execution failed! Exiting..."; exit 1; }
+
+popd
+
+pushd ansible
+
+echo "Executing ansible-playbook"
+echo "********************************************************************************************"
+ansible-playbook -i host_inventory_services play.yml --extra-vars "@extra-vars.json"
 [ $? -ne 0 ] && { echo "Execution failed! Exiting..."; exit 1; }
