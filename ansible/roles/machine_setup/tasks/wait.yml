@@ -1,14 +1,14 @@
 ---
 
-- name: Wait for EC2 Instances
+- name: Wait for demo Instances
   block:
-    - name: Wait for EC2 Instances
+    - name: Wait for demo Instances
       wait_for:
         host: "{{ hostvars[item]['ansible_host']| string }}"
         port: 22
         sleep: 5
         delay: 10
         timeout: 3600
-      with_items: "{{ groups['ece'] }}"
+      with_items: "{{ groups['demo_instances'] }}"
 
-  tags: Wait_for_ec2
+  tags: Wait_for_instances
