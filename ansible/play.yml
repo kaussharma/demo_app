@@ -1,6 +1,6 @@
 ---
 - name: generate and setup machine
-  hosts: localhost
+  hosts: demo_instance
   gather_facts: no
   become: yes
   roles:

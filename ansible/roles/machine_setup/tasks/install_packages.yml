@@ -14,8 +14,6 @@
      url: https://download.docker.com/linux/centos/docker-ce.repo
      dest: /etc/yum.repos.d/docer-ce.repo
 
-
-
 - name: Enable Docker Edge repo
   ini_file:
     dest: /etc/yum.repos.d/docker-ce.repo
@@ -36,7 +34,6 @@
   package:
     name: docker-ce
     state: latest
-
 
 - name: Start Docker service
   service:
