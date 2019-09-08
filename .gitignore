@@ -10,3 +10,5 @@
 .ssh
 *.ssh
 */*.terraform.*
+/ansible/extra-vars.json
+/ansible/host_inventory_services

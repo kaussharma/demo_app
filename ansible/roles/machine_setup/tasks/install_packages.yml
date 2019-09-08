@@ -1,0 +1,9 @@
+---
+
+- name: install packages
+  yum:
+    name: "{{ packages }}"
+  vars:
+    packages:
+      - httpd
+      - httpd-tools
