@@ -69,6 +69,7 @@ pushd terraform
 BACKEND_VARS_PATH="$(pwd)/vars/$STAGE/backend.tfbackend"
 INFRA_VARS_PATH="$(pwd)/vars/$STAGE/infra.tfvars"
 
+
 S3_BUCKET="$(sed -n 's/^bucket\s*=\s*"\(.*\)"$/\1/p' < $BACKEND_VARS_PATH)"
 
 if [[ -z "${S3_BUCKET}" ]]; then
