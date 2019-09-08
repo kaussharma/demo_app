@@ -2,5 +2,6 @@
 - name: generate and setup machine
   hosts: localhost
   gather_facts: no
+  become: yes
   roles:
     - role: machine_setup
